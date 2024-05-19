@@ -11,13 +11,15 @@ export {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
-export { NavigationContainer } from '@react-navigation/native';
-
-export { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+export {NavigationContainer} from '@react-navigation/native';
 
 export {
-  moderateScale,
-  moderateVerticalScale,
-} from 'react-native-size-matters';
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
 
-export { default as Lottie } from 'lottie-react-native';
+export {moderateScale, moderateVerticalScale} from 'react-native-size-matters';
+
+export {default as Lottie} from 'lottie-react-native';
+
+export {ifIphoneX} from 'react-native-iphone-x-helper';

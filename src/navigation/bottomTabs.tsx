@@ -1,8 +1,6 @@
-import { ifIphoneX } from 'react-native-iphone-x-helper';
-
-import { createBottomTabNavigator, moderateScale } from '~/modules';
-import { HomeScreen } from '~/screens';
-import { Routes } from '~/utils';
+import {createBottomTabNavigator, moderateScale, ifIphoneX} from '~/modules';
+import {HomeScreen} from '~/screens';
+import {Routes} from '~/utils';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -40,8 +38,7 @@ export const BottomTabs = () => (
         shadowOpacity: 0.3,
         shadowRadius: 16,
       },
-    }}
-  >
+    }}>
     <BottomTab.Screen name={Routes.Home} component={HomeScreen} />
   </BottomTab.Navigator>
 );
