@@ -1,10 +1,10 @@
 import {ButtonsContainer, SafeAreaView} from './styles';
 
-const HomeScreen = () => {
+const ProfileScreen = () => {
   return (
     <SafeAreaView>
       <ButtonsContainer />
     </SafeAreaView>
   );
 };
-export default HomeScreen;
+export default ProfileScreen;
