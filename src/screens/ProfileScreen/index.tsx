@@ -1,9 +1,9 @@
-import {ButtonsContainer, SafeAreaView} from './styles';
+import {SafeAreaView, TextHello} from './styles';
 
 const ProfileScreen = () => {
   return (
     <SafeAreaView>
-      <ButtonsContainer />
+      <TextHello>Hello word, esta é a pagina X</TextHello>
     </SafeAreaView>
   );
 };
