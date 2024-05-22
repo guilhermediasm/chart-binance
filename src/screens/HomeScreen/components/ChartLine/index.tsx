@@ -16,24 +16,11 @@ const Index = ({
   }[];
 }) => {
   const [scaleRelativeToTime, setScaleRelativeToTime] = React.useState(false);
-  const [toggleMinMaxLabels, setToggleMinMaxLabels] = React.useState(false);
   const [toggleSnapToPoint, setToggleSnapToPoint] = React.useState(false);
   const [toggleHighlight, setToggleHighlight] = React.useState(false);
   const [yRange, setYRange] = React.useState<undefined | 'low' | 'high'>(
     undefined,
   );
-
-  const toggleYRange = () => {
-    setYRange(domain => {
-      if (!domain) {
-        return 'low';
-      }
-      if (domain === 'low') {
-        return 'high';
-      }
-      return undefined;
-    });
-  };
 
   const [min, max] = useMemo(() => {
     if (Array.isArray(lineData)) {
@@ -70,15 +57,33 @@ const Index = ({
       <LineChart
         width={Dimensions.get('window').width * 1.8}
         height={Dimensions.get('window').height * 0.4}>
-        <LineChart.Path color="black">
-          {toggleMinMaxLabels && (
-            <>
-              <LineChart.Gradient color="black" />
-              <LineChart.Tooltip position="top" at={max} />
-              <LineChart.Tooltip position="bottom" at={min} yGutter={-10} />
-            </>
-          )}
-          {toggleHighlight && (
+        <LineChart.Path color="#81e6ff">
+          <LineChart.Gradient color="#81e6ff" />
+          <LineChart.Tooltip
+            position="top"
+            at={max}
+            textStyle={{
+              backgroundColor: '#ffffff',
+              borderRadius: 4,
+              color: '#84ff00',
+              fontSize: 18,
+              padding: 4,
+            }}
+          />
+          <LineChart.Tooltip
+            position="bottom"
+            at={min}
+            yGutter={-10}
+            textStyle={{
+              backgroundColor: '#f8e7e7',
+              borderRadius: 4,
+              color: '#ff0000',
+              fontSize: 18,
+              padding: 4,
+            }}
+          />
+          <LineChart.HorizontalLine at={{index: 2}} />
+          {!toggleHighlight && (
             <LineChart.Highlight
               color="red"
               from={Math.floor(lineData.length / 3)}
@@ -89,6 +94,7 @@ const Index = ({
         <LineChart.CursorCrosshair
           snapToPoint={toggleSnapToPoint}
           onActivated={invokeHaptic}
+          color="#fff700"
           onEnded={invokeHaptic}>
           <LineChart.Tooltip position="top" />
           <LineChart.HoverTrap />

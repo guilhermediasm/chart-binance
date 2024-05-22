@@ -20,7 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Index = ({candleData}: {candleData: any[]}) => {
+const Index = ({
+  candleData,
+  visibility = true,
+}: {
+  candleData: any[];
+  visibility?: boolean;
+}) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -55,20 +61,22 @@ const Index = ({candleData}: {candleData: any[]}) => {
           </View>
         )}
       </View>
-      <View>
-        <Chart candleData={candleData} />
-        <PanGestureHandler minDist={0} {...{onGestureEvent}}>
-          <Animated.View style={StyleSheet.absoluteFill}>
-            <Animated.View style={[StyleSheet.absoluteFill, horizontal]}>
-              <Line x={SIZE} y={0} />
+      {visibility && (
+        <View>
+          <Chart candleData={candleData} />
+          <PanGestureHandler minDist={0} {...{onGestureEvent}}>
+            <Animated.View style={StyleSheet.absoluteFill}>
+              <Animated.View style={[StyleSheet.absoluteFill, horizontal]}>
+                <Line x={SIZE} y={0} />
+              </Animated.View>
+              <Animated.View style={[StyleSheet.absoluteFill, vertical]}>
+                <Line x={0} y={SIZE} />
+              </Animated.View>
+              <Label {...{translateY, opacity, Candles: candleData}} />
             </Animated.View>
-            <Animated.View style={[StyleSheet.absoluteFill, vertical]}>
-              <Line x={0} y={SIZE} />
-            </Animated.View>
-            <Label {...{translateY, opacity, Candles: candleData}} />
-          </Animated.View>
-        </PanGestureHandler>
-      </View>
+          </PanGestureHandler>
+        </View>
+      )}
     </View>
   );
 };

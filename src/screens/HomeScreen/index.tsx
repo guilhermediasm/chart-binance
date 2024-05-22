@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {View, Switch} from 'react-native';
 
-import {StyleSheet, ScrollView, View} from 'react-native';
-
-import LineChart from './components/ChartLine';
+import ChartLineChart from './components/ChartLine';
 import CandlestickChart from './components/CandLestick';
 import {TCandle} from 'react-native-wagmi-charts';
 
@@ -35,7 +33,7 @@ const useBinanceWebSocket = (symbol: string, interval: string) => {
       };
 
       setLineData(prevData => [...prevData.slice(-99), newLineData]);
-      setCandleData(prevData => [...prevData.slice(-99), newCandleData]);
+      setCandleData(prevData => [...prevData.slice(-50), newCandleData]);
     };
 
     return () => {
@@ -47,11 +45,30 @@ const useBinanceWebSocket = (symbol: string, interval: string) => {
 };
 
 const HomeScreen = () => {
+  const [isEnabled, setIsEnabled] = useState(true);
   const {lineData, candleData} = useBinanceWebSocket('btcusdt', '1m');
+
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
-      {candleData.length > 0 && <CandlestickChart candleData={candleData} />}
+      <CandlestickChart
+        candleData={candleData}
+        visibility={candleData.length > 0 && isEnabled}
+      />
+      {lineData.length > 0 && !isEnabled && (
+        <View style={{position: 'absolute', top: '30%'}}>
+          <ChartLineChart lineData={lineData} />
+        </View>
+      )}
+      <Switch
+        trackColor={{false: '#9eff81', true: '#81b0ff'}}
+        thumbColor={isEnabled ? '#f5dd4b' : '#00fff2'}
+        ios_backgroundColor="#eaff00"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+        style={{position: 'absolute', right: 0, bottom: 95}}
+      />
     </View>
   );
 };
